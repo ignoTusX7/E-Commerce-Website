@@ -1,4 +1,5 @@
-import { Routes, Route } from "react-router-dom";
+/* eslint-disable react/prop-types */
+import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import NoPageFound from "./pages/404/NoPageFound";
 import MyState from "./context/myState";
@@ -12,23 +13,48 @@ import SignUp from "./pages/SignUp/SignUp";
 import Login from "./pages/Login/Login";
 import ProductInfo from "./pages/ProductInfo/ProductInfo";
 import Dashboard from "./pages/Admin/Dashboard/dashboard";
+import { ToastContainer } from "react-toastify";
+
 
 function App() {
+  
   return (
     <>
       <MyState>
+        <ToastContainer />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/fashions" element={<Fashions />} />
           <Route path="/electronics" element={<Electronics />} />
           <Route path="/mobile-and-tablets" element={<MobilesAndTablets />} />
           <Route path="/all-items" element={<AllItems />} />
-          <Route path="/orders" element={<Orders />} />
-          <Route path="/cart" element={<Cart />} />
+          <Route
+            path="/orders"
+            element={
+              <ProtectedRoutes>
+                <Orders />
+              </ProtectedRoutes>
+            }
+          />
+          <Route
+            path="/cart"
+            element={
+              <ProtectedRoutes>
+                <Cart />
+              </ProtectedRoutes>
+            }
+          />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/login" element={<Login/>} />
-          <Route path="/product/:id" element={<ProductInfo/>} />
-          <Route path="/admin/dashboard" element={<Dashboard/>} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/product/:id" element={<ProductInfo />} />
+          <Route
+            path="/admin/dashboard"
+            element={
+              <ProtectedRoutesForAdmin>
+                <Dashboard />
+              </ProtectedRoutesForAdmin>
+            }
+          />
           <Route path="/*" element={<NoPageFound />} />
         </Routes>
       </MyState>
@@ -37,3 +63,24 @@ function App() {
 }
 
 export default App;
+
+export const ProtectedRoutes = ({ children }) => {
+  if (localStorage.getItem("user")) {
+    return children;
+  } else {
+    return <Navigate to="/login" />;
+  }
+};
+
+export const ProtectedRoutesForAdmin = ({ children }) => {
+  const admin = JSON.parse(localStorage.getItem("user"));
+
+  if (
+    localStorage.getItem("user") &&
+    admin.user.email == "moxvankar2005@gmail.com"
+  ) {
+    return children;
+  } else {
+    return <Navigate to="/login" />;
+  }
+};

@@ -5,13 +5,12 @@ import HeroSection from "../../components/HeroSection/HeroSection";
 import Filter from "../../components/HeroSection/Fiilter";
 import ProductCard from "../../components/HeroSection/ProductCards";
 import Features from "../../components/HeroSection/Features";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Home() {
   const context = useContext(MyContext);
   // const dispatch = useDispatch();
   // const cartItem = useSelector((state) => state.cart);
-
- 
 
   return (
     <Layout>

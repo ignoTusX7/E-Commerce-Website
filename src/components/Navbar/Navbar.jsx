@@ -12,6 +12,16 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
+  let user;
+  if (localStorage.getItem("user")) {
+    user = JSON.parse(localStorage.getItem("user"));
+  console.log(user)
+  }
+
+  const logout = () => {
+    localStorage.clear("user");
+    window.location.href = "/";
+  };
   return (
     <>
       <nav
@@ -89,7 +99,7 @@ export default function Navbar() {
             <li className={`${navStyles.liClasses}`}>
               <NavLink
                 className={({ isActive }) => (isActive ? "font-semibold" : "")}
-                to="/order"
+                to="/orders"
               >
                 Orders
               </NavLink>
@@ -102,32 +112,53 @@ export default function Navbar() {
                 Cart
               </NavLink>
             </li>
-            <li className={`${navStyles.liClasses}`}>
-              <NavLink
-                className={({ isActive }) => (isActive ? "font-semibold" : "")}
-                to="/admin/dashboard"
-              >
-                Admin
-              </NavLink>
-            </li>
+            {user && user.user.email == import.meta.env.VITE_ADMIN_EMAIL ? (
+              <li className={`${navStyles.liClasses}`}>
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive ? "font-semibold" : ""
+                  }
+                  to="/admin/dashboard"
+                >
+                  Admin
+                </NavLink>
+              </li>
+            ) : (
+              ""
+            )}
           </ul>
           {/* buttons */}
           <div className="lg:flex block items-center gap-3 mr-5 ">
-            <Button className="bg-violet-800 text-white my-5 mx-1">
-              <NavLink to="/login">Log In</NavLink>
-            </Button>
-            <Button className="bg-violet-800 text-white mx-1">
-              <NavLink to="/signup">Sign Up</NavLink>
-            </Button>
+            {user ? (
+              <Button
+                className="bg-violet-800 text-white my-5 mx-1"
+                onClick={logout}
+              >
+                Log Out
+              </Button>
+            ) : (
+              <>
+                <Button className="bg-violet-800 text-white my-5 mx-1">
+                  <NavLink to="/login">Log In</NavLink>
+                </Button>
+                <Button className="bg-violet-800 text-white mx-1">
+                  <NavLink to="/signup">Sign Up</NavLink>
+                </Button>
+              </>
+            )}
 
-            <div
-              className="me-3 text-3xl lg:block hidden cursor-pointer"
-              onClick={() =>
-                isSidebarOpen ? setIsSidebarOpen(false) : setIsSidebarOpen(true)
-              }
-            >
-              <AiOutlineShoppingCart />
-            </div>
+            {user && (
+              <div
+                className="me-3 text-3xl lg:block hidden cursor-pointer"
+                onClick={() =>
+                  isSidebarOpen
+                    ? setIsSidebarOpen(false)
+                    : setIsSidebarOpen(true)
+                }
+              >
+                <AiOutlineShoppingCart />
+              </div>
+            )}
           </div>
         </div>
       </nav>
@@ -135,7 +166,7 @@ export default function Navbar() {
       {/* sidebar */}
 
       <div
-        className={`absolute top-0 right-0 bg-violet-300 h-screen lg:w-56 w-44 ${
+        className={`absolute z-50 top-0 right-0 bg-violet-300 h-screen lg:w-56 w-44 ${
           isSidebarOpen ? `w-56 block` : `w-0 hidden`
         }  `}
       >
