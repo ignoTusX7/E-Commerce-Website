@@ -1,21 +1,18 @@
 // import { useState } from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import { MdOutlineProductionQuantityLimits } from "react-icons/md";
-import { FaUser } from "react-icons/fa";
+import { FaEdit, FaUser } from "react-icons/fa";
 import { AiFillShopping, AiOutlineDelete } from "react-icons/ai";
 import AddProduct from "../../../components/Modals/AddProducts";
 import UpdateModal from "../../../components/Modals/UpdateProducts";
+import { useContext } from "react";
+import MyContext from "../../../context/myContext";
+import { NavLink } from "react-router-dom";
 
 function DashboardTab() {
-  //   let [isOpen, setIsOpen] = useState(false);
+  const context = useContext(MyContext);
+  const { product, edithandle, deleteProduct } = context;
 
-  //   function closeModal() {
-  //     setIsOpen(false);
-  //   }
-
-  //   function openModal() {
-  //     setIsOpen(true);
-  //   }
   return (
     <>
       <div className="container mx-auto">
@@ -100,35 +97,57 @@ function DashboardTab() {
                       </tr>
                     </thead>
                     <tbody className="">
-                      <tr className="bg-gray-50 border-b  dark:border-gray-700">
-                        <td className="px-6 py-4 text-black ">1.</td>
-                        <th
-                          scope="row"
-                          className="px-6 py-4 font-medium text-black whitespace-nowrap"
-                        >
-                          <img
-                            className="w-16"
-                            src="https://dummyimage.com/720x400"
-                            alt="img"
-                          />
-                        </th>
-                        <td className="px-6 py-4 text-black ">Title</td>
-                        <td className="px-6 py-4 text-black ">₹100</td>
-                        <td className="px-6 py-4 text-black ">pots</td>
-                        <td className="px-6 py-4 text-black ">12 Aug 2019</td>
-                        <td className="px-6 py-4">
-                          <div className=" flex gap-2">
-                            <div className=" flex cursor-pointer text-black ">
-                              <div className="flex items-center">
-                                <AiOutlineDelete size={20} />
-                              </div>
-                              <div>
-                                <UpdateModal />
-                              </div>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
+                      {product &&
+                        product.map((item, i) => {
+                          return (
+                            <tr
+                              key={i}
+                              className="bg-gray-50 border-b  dark:border-gray-700"
+                            >
+                              <td className="px-6 py-4 text-black ">{i + 1}</td>
+                              <th
+                                scope="row"
+                                className="px-6 py-4 font-medium text-black whitespace-nowrap"
+                              >
+                                <img
+                                  className="w-16 h-16"
+                                  src={item.imageUrl}
+                                  alt="img"
+                                />
+                              </th>
+                              <td className="px-6 py-4 text-black ">
+                                {item.title}
+                              </td>
+                              <td className="px-6 py-4 text-black ">
+                                {item.price}
+                              </td>
+                              <td className="px-6 py-4 text-black ">
+                                {item.category}
+                              </td>
+                              <td className="px-6 py-4 text-black ">
+                                {item.createdAt}
+                              </td>
+                              <td className="px-6 py-4">
+                                <div className=" flex gap-2">
+                                  <div className=" flex cursor-pointer text-black gap-3">
+                                    <div className="flex items-center">
+                                      <AiOutlineDelete
+                                        onClick={() => deleteProduct(item)}
+                                        size={25}
+                                      />
+                                    </div>
+                                    <NavLink to="/admin/update-product">
+                                      <FaEdit
+                                        size={25}
+                                        onClick={() => edithandle(item)}
+                                      />
+                                    </NavLink>
+                                  </div>
+                                </div>
+                              </td>
+                            </tr>
+                          );
+                        })}
                     </tbody>
                   </table>
                 </div>

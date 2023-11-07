@@ -3,8 +3,14 @@ import { MdProductionQuantityLimits } from "react-icons/md";
 import { FaRegUser } from "react-icons/fa6";
 import DashboardTab from "./DashboardTabs";
 import { AiFillShopping } from "react-icons/ai";
+import { useContext } from "react";
+import MyContext from "../../../context/myContext";
 
 function Dashboard() {
+  const context = useContext(MyContext);
+
+  const { product, setProducts, addProduct } = context;
+
   return (
     <Layout>
       <section className="text-gray-600 body-font mt-10 mb-10">
@@ -16,7 +22,7 @@ function Dashboard() {
                   <MdProductionQuantityLimits />
                 </div>
                 <h2 className="title-font font-medium text-3xl text-black fonts1">
-                  10
+                {product && product.length}
                 </h2>
                 <p className=" text-purple-500  font-bold">Total Products</p>
               </div>

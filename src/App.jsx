@@ -14,10 +14,9 @@ import Login from "./pages/Login/Login";
 import ProductInfo from "./pages/ProductInfo/ProductInfo";
 import Dashboard from "./pages/Admin/Dashboard/dashboard";
 import { ToastContainer } from "react-toastify";
-
+import UpdateModal from "./components/Modals/UpdateProducts";
 
 function App() {
-  
   return (
     <>
       <MyState>
@@ -52,6 +51,14 @@ function App() {
             element={
               <ProtectedRoutesForAdmin>
                 <Dashboard />
+              </ProtectedRoutesForAdmin>
+            }
+          />
+          <Route
+            path="/admin/update-product"
+            element={
+              <ProtectedRoutesForAdmin>
+                <UpdateModal />
               </ProtectedRoutesForAdmin>
             }
           />

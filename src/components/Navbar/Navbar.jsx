@@ -1,8 +1,14 @@
 import { Button } from "@nextui-org/react";
-import { useState } from "react";
-import { AiOutlineCloseCircle, AiOutlineShoppingCart } from "react-icons/ai";
+import { useEffect, useState } from "react";
+import {
+  AiOutlineCloseCircle,
+  AiOutlineDelete,
+  AiOutlineShoppingCart,
+} from "react-icons/ai";
 import { BiMenu } from "react-icons/bi";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
+import { deleteFromCart } from "../../redux/slices/cartSlice";
 
 export default function Navbar() {
   const navStyles = {
@@ -11,17 +17,27 @@ export default function Navbar() {
 
   const [isOpen, setIsOpen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const dispatch = useDispatch();
+
+  const cartItem = useSelector((state) => state.cart);
 
   let user;
   if (localStorage.getItem("user")) {
     user = JSON.parse(localStorage.getItem("user"));
-  console.log(user)
   }
 
   const logout = () => {
     localStorage.clear("user");
     window.location.href = "/";
   };
+
+  const deleteCart = (product) => {
+    dispatch(deleteFromCart(product));
+  };
+
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cartItem));
+  }, [cartItem]);
   return (
     <>
       <nav
@@ -91,7 +107,7 @@ export default function Navbar() {
             <li className={`${navStyles.liClasses}`}>
               <NavLink
                 className={({ isActive }) => (isActive ? "font-semibold" : "")}
-                to="/allitems"
+                to="/all-items"
               >
                 All Items
               </NavLink>
@@ -149,7 +165,7 @@ export default function Navbar() {
 
             {user && (
               <div
-                className="me-3 text-3xl lg:block hidden cursor-pointer"
+                className="me-3 text-3xl lg:flex gap-2 hidden cursor-pointer"
                 onClick={() =>
                   isSidebarOpen
                     ? setIsSidebarOpen(false)
@@ -157,6 +173,7 @@ export default function Navbar() {
                 }
               >
                 <AiOutlineShoppingCart />
+                <p className="text-2xl">{cartItem.length}</p>
               </div>
             )}
           </div>
@@ -166,10 +183,13 @@ export default function Navbar() {
       {/* sidebar */}
 
       <div
-        className={`absolute z-50 top-0 right-0 bg-violet-300 h-screen lg:w-56 w-44 ${
+        className={`fixed z-50 top-0 right-0 bg-violet-300 h-screen lg:w-56 w-44 ${
           isSidebarOpen ? `w-56 block` : `w-0 hidden`
         }  `}
       >
+        <Button className="bg-violet-800 top-3 left-3 text-white mx-1">
+          <NavLink to="/cart">View in Cart</NavLink>
+        </Button>
         <div
           className="absolute top-3 duration-150 right-3 text-xl cursor-pointer"
           onClick={() =>
@@ -178,15 +198,28 @@ export default function Navbar() {
         >
           <AiOutlineCloseCircle />
         </div>
-        <div className="mt-5">
-          <h4 className="text-2xl font-bold">Cart: </h4>
-          <ul className="ms-3">
-            <li>Hello world</li>
-            <li>Hello world</li>
-            <li>Hello world</li>
-            <li>Hello world</li>
-            <li>Hello world</li>
-            <li>Hello world</li>
+        <div className="mt-12">
+          <h4 className="text-2xl font-bold text-center">Shopping Cart: </h4>
+          <ul className="ms-8 list-decimal mb-8">
+            {cartItem.length > 0 ? (
+              cartItem.map((d, i) => {
+                return (
+                  <li key={i} className="my-2">
+                    {d.title}
+                    <div className="flex items-center justify-between mr-3">
+                      <p>₹ {d.price}</p>
+                      <AiOutlineDelete
+                        className="cursor-pointer"
+                        size={18}
+                        onClick={() => deleteCart(d)}
+                      />
+                    </div>
+                  </li>
+                );
+              })
+            ) : (
+              <p>No Items</p>
+            )}
           </ul>
         </div>
       </div>

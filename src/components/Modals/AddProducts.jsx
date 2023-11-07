@@ -7,16 +7,31 @@ import {
   Button,
   useDisclosure,
 } from "@nextui-org/react";
-import React from "react";
+import React, { useContext } from "react";
 import { FaCartPlus } from "react-icons/fa6";
+import MyContext from "../../context/myContext";
+import { toast } from "react-toastify";
 
-export default function OrderModal() {
+export default function AddProduct() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [backdrop, setBackdrop] = React.useState("opaque");
+  const context = useContext(MyContext);
+
+  const { products, setProducts, addProduct } = context;
 
   const handleOpen = (backdrop) => {
     setBackdrop(backdrop);
     onOpen();
+  };
+
+  const handleOnChange = (e) => {
+    const { name, value } = e.target;
+    setProducts((prevFormData) => ({ ...prevFormData, [name]: value }));
+  };
+
+  const show = (e) => {
+    e.preventDefault();
+    addProduct();
   };
 
   return (
@@ -42,8 +57,10 @@ export default function OrderModal() {
                   <div>
                     <input
                       type="Product title"
-                      name="Product title"
+                      name="title"
                       id="Product title"
+                      value={products.title}
+                      onChange={handleOnChange}
                       placeholder="Product title"
                       className=" border outline-0 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 bg-gray-100"
                       required
@@ -51,20 +68,24 @@ export default function OrderModal() {
                   </div>
                   <div>
                     <input
-                      type="Product title"
-                      name="Product title"
-                      id="Product title"
-                      placeholder="Product title"
+                      type="Product price"
+                      name="price"
+                      id="Product price"
+                      value={products.price}
+                      onChange={handleOnChange}
+                      placeholder="Product Price"
                       className=" border outline-0 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 bg-gray-100"
                       required
                     />
                   </div>
-                 
+
                   <div>
                     <input
                       type="text"
-                      name="Product imageUrl"
+                      name="imageUrl"
                       id="Product imageUrl"
+                      value={products.imageUrl}
+                      onChange={handleOnChange}
                       placeholder="Product imageUrl"
                       className=" border outline-0 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 bg-gray-100"
                       required
@@ -73,8 +94,10 @@ export default function OrderModal() {
                   <div>
                     <input
                       type="text"
-                      name="Product category"
-                      id="Product category"
+                      name="category"
+                      id="category"
+                      value={products.category}
+                      onChange={handleOnChange}
                       placeholder="Product category"
                       className=" border outline-0 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 bg-gray-100"
                       required
@@ -82,8 +105,10 @@ export default function OrderModal() {
                   </div>
                   <div>
                     <textarea
-                      name="Product Description"
-                      id="Product Description"
+                      id="description"
+                      name="description"
+                      value={products.description}
+                      onChange={handleOnChange}
                       placeholder="Product Description"
                       className=" border outline-0 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 bg-gray-100"
                       required
@@ -101,6 +126,7 @@ export default function OrderModal() {
                   onPress={onClose}
                   className="
                   bg-violet-700 text-white"
+                  onClick={show}
                 >
                   Add Product
                 </Button>
