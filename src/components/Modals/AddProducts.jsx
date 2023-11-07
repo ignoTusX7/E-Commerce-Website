@@ -56,7 +56,7 @@ export default function AddProduct() {
                 <form className="space-y-4 md:space-y-6" action="#">
                   <div>
                     <input
-                      type="Product title"
+                      type="text"
                       name="title"
                       id="Product title"
                       value={products.title}
@@ -68,7 +68,19 @@ export default function AddProduct() {
                   </div>
                   <div>
                     <input
-                      type="Product price"
+                      type="text"
+                      name="brand"
+                      id="Product brand"
+                      value={products.brand}
+                      onChange={handleOnChange}
+                      placeholder="Product brand"
+                      className=" border outline-0 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 bg-gray-100"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <input
+                      type="text"
                       name="price"
                       id="Product price"
                       value={products.price}

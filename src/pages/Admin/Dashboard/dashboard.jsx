@@ -15,7 +15,7 @@ function Dashboard() {
     <Layout>
       <section className="text-gray-600 body-font mt-10 mb-10">
         <div className="container px-5 mx-auto mb-10">
-          <div className="flex flex-wrap -m-4 text-center">
+          <div className="flex flex-wrap -m-4 text-center mt-10">
             <div className="p-4 md:w-1/4 sm:w-1/2 w-full">
               <div className=" border-2 hover:shadow-purple-600 bg-gray-100 border-gray-300    px-4 py-3 rounded-xl">
                 <div className="text-purple-500 h-12 text-4xl flex items-center justify-center mb-3">

@@ -41,8 +41,7 @@ export default function Navbar() {
   return (
     <>
       <nav
-        className={`bg-white shadow-md -tran border-b-2 lg:flex duration-150 text-black flex-wrap justify-between items-center`}
-      >
+        className={`bg-white shadow-md -tran border-b-2 z-50 top-0 fixed w-full lg:flex duration-150 text-black flex-wrap justify-between items-center`}>
         {/* logo */}
         <div className="flex items-center justify-between">
           <div className="text-black font-bold text-2xl mx-3">E-Store</div>
@@ -181,7 +180,6 @@ export default function Navbar() {
       </nav>
 
       {/* sidebar */}
-
       <div
         className={`fixed z-50 top-0 right-0 bg-violet-300 h-screen lg:w-56 w-44 ${
           isSidebarOpen ? `w-56 block` : `w-0 hidden`

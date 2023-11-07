@@ -22,6 +22,7 @@ function MyState(props) {
     price: "",
     imageUrl: "",
     category: "",
+    brand: "",
     description: "",
     createdAt: new Date().toLocaleString("en-IN"),
   });
@@ -32,6 +33,7 @@ function MyState(props) {
       !products.price ||
       !products.imageUrl ||
       !products.category ||
+      !products.brand ||
       !products.description
     ) {
       return toast.error("Please fill all fields");
@@ -41,6 +43,7 @@ function MyState(props) {
       await addDoc(productRef, products);
       toast.success("Product Add successfully");
       getProductData();
+      window.location.href = "/admin/dashboard";
     } catch (error) {
       console.log(error);
     }

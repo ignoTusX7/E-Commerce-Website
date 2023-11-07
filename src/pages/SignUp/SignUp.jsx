@@ -28,11 +28,9 @@ export default function SignUp() {
         uid: user.user.uid,
         createdAt: Timestamp.now()
       };
-      console.log(userData);
 
       const docRef = await addDoc(collection(fireDB, "users"), userData);
-
-      console.log(docRef);
+      
 
       toast.success("Successfully Created Account");
     } catch (error) {

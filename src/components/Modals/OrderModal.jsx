@@ -94,7 +94,7 @@ export default function OrderModal() {
                       type="text"
                       name="mobileNumber"
                       id="mobileNumber"
-                      className=" border outline-0 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 bg-gray-100"
+                      className="border outline-0 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 bg-gray-100"
                       required
                     />
                   </div>
@@ -107,8 +107,7 @@ export default function OrderModal() {
                 <Button
                   color="primary"
                   onPress={onClose}
-                  className="
-                bg-violet-700 text-white"
+                  className="bg-violet-700 text-white"
                 >
                   Order Now
                 </Button>

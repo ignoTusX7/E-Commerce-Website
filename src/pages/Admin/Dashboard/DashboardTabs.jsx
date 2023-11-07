@@ -83,6 +83,9 @@ function DashboardTab() {
                           Title
                         </th>
                         <th scope="col" className="px-6 py-3">
+                          Brand
+                        </th>
+                        <th scope="col" className="px-6 py-3">
                           Price
                         </th>
                         <th scope="col" className="px-6 py-3">
@@ -117,6 +120,9 @@ function DashboardTab() {
                               </th>
                               <td className="px-6 py-4 text-black ">
                                 {item.title}
+                              </td>
+                              <td className="px-6 py-4 text-black ">
+                                {item.brand}
                               </td>
                               <td className="px-6 py-4 text-black ">
                                 {item.price}
