@@ -1,57 +1,25 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Layout from "../../components/Layout";
-import OrderModal from "../../components/Modals/OrderModal";
-import { useEffect, useState } from "react";
-import { deleteFromCart, updateQuantity } from "../../redux/slices/cartSlice";
+import { useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import MyContext from "../../context/myContext";
 
 function Cart() {
-  const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart);
-
-  const [subTotal, setSubTotal] = useState(0);
-  const shippingFees = 50;
-  const [total, setTotal] = useState(0);
-
-  const deleteCart = (product) => {
-    dispatch(deleteFromCart(product));
-  };
-
-  const increaseQuantity = (product) => {
-    dispatch(
-      updateQuantity({ productId: product.id, quantity: product.quantity + 1 })
-    );
-  };
-
-  const decreaseQuantity = (product) => {
-    if (product.quantity > 1) {
-      dispatch(
-        updateQuantity({
-          productId: product.id,
-          quantity: product.quantity - 1,
-        })
-      );
-    }
-  };
+  const navigate = useNavigate();
+  const context = useContext(MyContext);
+  const {
+    subTotal,
+    total,
+    shippingFees,
+    decreaseQuantity,
+    updatePrice,
+    increaseQuantity,
+    deleteCart,
+  } = context;
 
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cartItems));
-
-    let subTotalAmount = 0;
-
-    for (const product of cartItems) {
-      subTotalAmount += product.price * product.quantity;
-    }
-
-    const totalAmount = subTotalAmount + shippingFees;
-
-    setSubTotal(subTotalAmount);
-    setTotal(totalAmount);
-
-    if (cartItems.length <= 0) {
-      setTotal(0);
-    }
-
-    console.log(cartItems);
   }, [cartItems]);
   return (
     <Layout>
@@ -95,7 +63,7 @@ function Cart() {
                             disabled
                             className="w-10 text-center border-2"
                           />
-
+                          {updatePrice(product)}
                           <button
                             className="bg-gray-200 px-2 py-1 text-md font-bold"
                             onClick={() => increaseQuantity(product)}
@@ -148,8 +116,13 @@ function Cart() {
                 <p className="mb-1 text-lg font-bold">₹{total}</p>
               </div>
             </div>
-            {/* <Modal  /> */}
-            <OrderModal />
+            <button
+              onClick={() => navigate("/checkout")}
+              disabled={total <= 0 ? true : false}
+              className="bg-violet-600 hover:bg-violet-700 disabled:bg-violet-400 disabled:cursor-not-allowed duration-150 text-white p-2 text-md rounded-md"
+            >
+              Checkout
+            </button>
           </div>
         </div>
       </div>

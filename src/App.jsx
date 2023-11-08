@@ -9,12 +9,14 @@ import MobilesAndTablets from "./pages/items/MobileAndTablets/MobilesAndTablets"
 import AllItems from "./pages/items/AllItems/AllItems";
 import Cart from "./pages/Cart/Cart";
 import Orders from "./pages/Order/Orders";
+import Order from "./pages/Order/Order";
 import SignUp from "./pages/SignUp/SignUp";
 import Login from "./pages/Login/Login";
 import ProductInfo from "./pages/ProductInfo/ProductInfo";
 import Dashboard from "./pages/Admin/Dashboard/dashboard";
 import { ToastContainer } from "react-toastify";
 import UpdateModal from "./components/Modals/UpdateProducts";
+import Checkout from "./pages/Checkout/Checkout";
 
 function App() {
   return (
@@ -36,10 +38,26 @@ function App() {
             }
           />
           <Route
+            path="/checkout"
+            element={
+              <ProtectedRoutes>
+                <Checkout />
+              </ProtectedRoutes>
+            }
+          />
+          <Route
             path="/cart"
             element={
               <ProtectedRoutes>
                 <Cart />
+              </ProtectedRoutes>
+            }
+          />
+          <Route
+            path="/order/:id"
+            element={
+              <ProtectedRoutes>
+                <Order/>
               </ProtectedRoutes>
             }
           />
@@ -84,7 +102,7 @@ export const ProtectedRoutesForAdmin = ({ children }) => {
 
   if (
     localStorage.getItem("user") &&
-    admin.user.email == "moxvankar2005@gmail.com"
+    admin.user.email == import.meta.env.VITE_ADMIN_EMAIL
   ) {
     return children;
   } else {

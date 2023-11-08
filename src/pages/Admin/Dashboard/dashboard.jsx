@@ -9,7 +9,7 @@ import MyContext from "../../../context/myContext";
 function Dashboard() {
   const context = useContext(MyContext);
 
-  const { product, setProducts, addProduct } = context;
+  const { product, orders } = context;
 
   return (
     <Layout>
@@ -33,7 +33,7 @@ function Dashboard() {
                   <AiFillShopping />
                 </div>
                 <h2 className="title-font font-medium text-3xl text-black fonts1">
-                  10
+                  {orders.length}
                 </h2>
                 <p className=" text-purple-500  font-bold">Total Orders</p>
               </div>

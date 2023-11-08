@@ -4,15 +4,13 @@ import { MdOutlineProductionQuantityLimits } from "react-icons/md";
 import { FaEdit, FaUser } from "react-icons/fa";
 import { AiFillShopping, AiOutlineDelete } from "react-icons/ai";
 import AddProduct from "../../../components/Modals/AddProducts";
-import UpdateModal from "../../../components/Modals/UpdateProducts";
 import { useContext } from "react";
 import MyContext from "../../../context/myContext";
 import { NavLink } from "react-router-dom";
 
 function DashboardTab() {
   const context = useContext(MyContext);
-  const { product, edithandle, deleteProduct } = context;
-
+  const { product, edithandle, deleteProduct, orders } = context;
   return (
     <>
       <div className="container mx-auto">
@@ -160,7 +158,6 @@ function DashboardTab() {
               </div>
             </TabPanel>
             <TabPanel>
-              {/* <Order order={order} setOrder={setOrder} setLoading={setLoading} /> */}
               <div className="relative overflow-x-auto mb-16">
                 <h1 className=" text-center mb-5 text-3xl font-semibold underline">
                   Order Details
@@ -172,7 +169,13 @@ function DashboardTab() {
                         Payment Id
                       </th>
                       <th scope="col" className="px-6 py-3">
+                        Order Id
+                      </th>
+                      <th scope="col" className="px-6 py-3">
                         Image
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                        Product ID
                       </th>
                       <th scope="col" className="px-6 py-3">
                         Title
@@ -184,6 +187,9 @@ function DashboardTab() {
                         Category
                       </th>
                       <th scope="col" className="px-6 py-3">
+                        Quantity
+                      </th>
+                      <th scope="col" className="px-6 py-3">
                         Name
                       </th>
                       <th scope="col" className="px-6 py-3">
@@ -193,7 +199,7 @@ function DashboardTab() {
                         Pincode
                       </th>
                       <th scope="col" className="px-6 py-3">
-                        Phone Number
+                        Mobile Number
                       </th>
                       <th scope="col" className="px-6 py-3">
                         Email
@@ -204,31 +210,52 @@ function DashboardTab() {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr className="bg-gray-50 border-b  dark:border-gray-700">
-                      <td className="px-6 py-4 text-black ">3393939</td>
-                      <th
-                        scope="row"
-                        className="px-6 py-4 font-medium text-black whitespace-nowrap"
-                      >
-                        <img
-                          className="w-16"
-                          src="https://dummyimage.com/720x400"
-                          alt="img"
-                        />
-                      </th>
-                      <td className="px-6 py-4 text-black ">Title</td>
-                      <td className="px-6 py-4 text-black ">₹100</td>
-                      <td className="px-6 py-4 text-black ">pots</td>
-
-                      <td className="px-6 py-4 text-black ">name</td>
-                      <td className="px-6 py-4 text-black ">india</td>
-                      <td className="px-6 py-4 text-black ">82828</td>
-                      <td className="px-6 py-4 text-black ">929929929929</td>
-                      <td className="px-6 py-4 text-black ">
-                        kkakka@gmail.com
-                      </td>
-                      <td className="px-6 py-4 text-black ">12 Aug 2019</td>
-                    </tr>
+                    {console.log(orders)}
+                    {orders &&
+                      orders.map((order, i) => {
+                        return order.cartItems.map((item, index) => {
+                          return (
+                            <tr
+                              key={index}
+                              className="bg-gray-50 border-b  dark:border-gray-700"
+                            >
+                              <td className="px-6 py-4 text-black ">{order.paymentId}</td>
+                              <td className="px-6 py-4 text-black ">{order.orderId}</td>
+                              <th
+                                scope="row"
+                                className="px-6 py-4 font-medium text-black whitespace-nowrap"
+                              >
+                                <img
+                                  className="w-16"
+                                  src={item.imageUrl}
+                                  alt="img"
+                                />
+                              </th>
+                              <td className="px-6 py-4 text-black ">
+                                {item.id}
+                              </td>
+                              <td className="px-6 py-4 text-black ">
+                                {item.title}
+                              </td>
+                              <td className="px-6 py-4 text-black ">₹{item.price}</td>
+                              <td className="px-6 py-4 text-black ">{item.category}</td>
+                              <td className="px-6 py-4 text-black ">{item.quantity}</td>
+                              <td className="px-6 py-4 text-black ">{order.addressInfo.name}</td>
+                              <td className="px-6 py-4 text-black ">{order.addressInfo.fullAddress}</td>
+                              <td className="px-6 py-4 text-black ">{order.addressInfo.pincode}</td>
+                              <td className="px-6 py-4 text-black ">
+                                {order.addressInfo.mobileNumber}
+                              </td>
+                              <td className="px-6 py-4 text-black ">
+                              {order.addressInfo.email}
+                              </td>
+                              <td className="px-6 py-4 text-black ">
+                                {order.date}
+                              </td>
+                            </tr>
+                          );
+                        });
+                      })}
                   </tbody>
                 </table>
               </div>

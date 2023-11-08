@@ -7,15 +7,22 @@ import {
   collection,
   deleteDoc,
   doc,
+  getDocs,
   onSnapshot,
   orderBy,
   query,
   setDoc,
 } from "firebase/firestore";
 import { toast } from "react-toastify";
-import { redirect } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  deleteFromCart,
+  updateQuantity,
+  updateTotal,
+} from "../redux/slices/cartSlice";
 
 function MyState(props) {
+  const dispatch = useDispatch();
   // creating product
   const [products, setProducts] = useState({
     title: "",
@@ -101,9 +108,83 @@ function MyState(props) {
     }
   };
 
+  const [orders, setOrder] = useState([]);
+
+  const getOrderData = async () => {
+    try {
+      const result = await getDocs(collection(fireDB, "orders"));
+      const orderArray = [];
+      result.forEach((doc) => {
+        orderArray.push(doc.data());
+      });
+      setOrder(orderArray);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const userid =  localStorage.getItem('user')?JSON.parse(localStorage.getItem("user")).user.uid: "";
+  const myOrders =
+    orders.length > 0 ? orders.filter((obj) => obj.userid == userid) : [];
+
   useEffect(() => {
     getProductData();
+    getOrderData();
   }, []);
+
+  const cartItems = useSelector((state) => state.cart);
+  const shippingFees = 50;
+
+  const [subTotal, setSubTotal] = useState(0);
+  const [total, setTotal] = useState(0);
+
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cartItems));
+
+    let subTotalAmount = 0;
+
+    for (const product of cartItems) {
+      subTotalAmount += product.price * product.quantity;
+    }
+
+    const totalAmount = subTotalAmount + shippingFees;
+    setSubTotal(subTotalAmount);
+    setTotal(totalAmount);
+
+    if (cartItems.length <= 0) {
+      setTotal(0);
+    }
+  }, [cartItems]);
+
+  const deleteCart = (product) => {
+    dispatch(deleteFromCart(product));
+  };
+
+  const updatePrice = (product) => {
+    dispatch(
+      updateTotal({
+        productId: product.id,
+        totalPrice: total,
+      })
+    );
+  };
+
+  const increaseQuantity = (product) => {
+    dispatch(
+      updateQuantity({ productId: product.id, quantity: product.quantity + 1 })
+    );
+  };
+
+  const decreaseQuantity = (product) => {
+    if (product.quantity > 1) {
+      dispatch(
+        updateQuantity({
+          productId: product.id,
+          quantity: product.quantity - 1,
+        })
+      );
+    }
+  };
 
   return (
     <MyContext.Provider
@@ -115,6 +196,15 @@ function MyState(props) {
         edithandle,
         deleteProduct,
         updateProduct,
+        subTotal,
+        total,
+        shippingFees,
+        increaseQuantity,
+        decreaseQuantity,
+        updatePrice,
+        deleteCart,
+        orders,
+        myOrders,
       }}
     >
       {props.children}

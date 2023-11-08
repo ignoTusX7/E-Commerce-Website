@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../redux/slices/cartSlice";
 import { toast } from "react-toastify";
 import { useEffect } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 /* eslint-disable react/prop-types */
 export default function ProductCard({ item }) {

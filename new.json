@@ -1,0 +1,64 @@
+{
+    "addressInfo": {
+      "pincode": "383110",
+      "createdAt": "8/11/2023, 9:39:17 am",
+      "name": "Moksh",
+      "email": "moxvankar2005@gmail.com",
+      "fullAddress": "City: Dungri B.O,Taluka: Idar,Dist: Sabarkantha,State: GUJARAT"
+    },
+    "date": "8/11/2023, 9:39:52 am",
+    "email": "moxvankar2005@gmail.com",
+    "userid": "aVzcGPX94CTgmsNB8NGXVKg6QQ32",
+    "orderId": "Order_1699423303661_2580",
+    "cartItems": [
+      {
+        "id": "MD7lU7Nca4IqzkmFLk7T",
+        "description": "Men Regular Fit Striped Casual Shirt for men Fashions",
+        "quantity": 1,
+        "imageUrl": "https://rukminim2.flixcart.com/image/612/612/xif0q/shirt/u/p/k/m-pc-005-plum-crazy-original-imagjwqa43t6xhhy.jpeg?q=70",
+        "totalPrice": 2557,
+        "title": "Men Regular Fit Striped Casual Shirt",
+        "createdAt": "7/11/2023, 12:40:40 pm",
+        "price": "499",
+        "brand": "Gucci",
+        "category": "Fashions"
+      },
+      {
+        "id": "U82xjoev5szSTUorp45H",
+        "imageUrl": "https://rukminim2.flixcart.com/image/612/612/xif0q/shirt/n/j/t/s-frml-st2-vebnor-original-imagtyvbmwzuqeyp.jpeg?q=70",
+        "description": "dsdfsaffasdfsaf",
+        "title": "Men Regular Fit Solid Spread Collar Casual Shirt",
+        "category": "Fashion",
+        "quantity": 1,
+        "brand": "Gucci",
+        "price": "999",
+        "createdAt": "7/11/2023, 12:43:24 pm",
+        "totalPrice": 2557
+      },
+      {
+        "imageUrl": "https://rukminim2.flixcart.com/image/612/612/xif0q/shirt/a/b/n/xl-hkv-008-aadi-original-imagqu3vazzpdczk.jpeg?q=70",
+        "category": "Fashion",
+        "totalPrice": 2557,
+        "brand": "aadi",
+        "title": "Men Regular Fit Checkered Spread Collar Casual Shirt",
+        "createdAt": "7/11/2023, 12:48:39 pm",
+        "price": "650",
+        "description": "Men Regular Fit Checkered Spread Collar Casual Shirt",
+        "id": "Hs9JRXTod6bK4B4g8H3e",
+        "quantity": 1
+      },
+      {
+        "price": "359",
+        "createdAt": "7/11/2023, 12:52:03 pm",
+        "totalPrice": 2557,
+        "category": "Fashion",
+        "imageUrl": "https://rukminim2.flixcart.com/image/612/612/xif0q/shirt/s/m/y/m-st1-vebnor-original-imagn69kcwphkfrf.jpeg?q=70",
+        "description": "Men Regular Fit Solid Mandarin Collar Casual Shirt",
+        "id": "SkZxc1tDf9qdH0wQqNO9",
+        "title": "Men Regular Fit Solid Mandarin Collar Casual Shirt",
+        "brand": "aadi",
+        "quantity": 1
+      }
+    ],
+    "paymentId": "pay_MxqJ2qgPxu1NV2"
+  }
