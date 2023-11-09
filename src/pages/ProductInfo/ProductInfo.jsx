@@ -1,6 +1,43 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useNavigate, useParams } from "react-router-dom";
 import Layout from "../../components/Layout";
+import { fireDB } from "../../firebase/FirebaseConfig";
+import {  doc, getDoc } from "firebase/firestore";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { addToCart } from "../../redux/slices/cartSlice";
 
 export default function ProductInfo() {
+  const params = useParams();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.cart);
+  const { id } = params;
+  const [product, setProduct] = useState({});
+  const getData = async () => {
+    const result = await getDoc(doc(fireDB, "products", id));
+    setProduct(result.data());
+  };
+
+  const addCart = (product) => {
+    if (window.localStorage.getItem("user")) {
+      const alreadyInCart = cartItems.some((item) => item.id === product.id);
+      if (alreadyInCart) {
+        toast.warning("Already in Cart");
+      } else {
+        product.quantity = 1;
+        dispatch(addToCart(product));
+        toast.success("Added to the cart");
+      }
+    } else {
+      return navigate("/login");
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
   return (
     <Layout>
       <section className="text-gray-600 body-font overflow-hidden">
@@ -8,15 +45,15 @@ export default function ProductInfo() {
           <div className="lg:w-4/5 mx-auto flex flex-wrap">
             <img
               alt="ecommerce"
-              className="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded"
-              src="https://dummyimage.com/400x400"
+              className="lg:w-1/2 w-full lg:h-auto h-64 object-contain object-center rounded"
+              src={product.imageUrl}
             />
             <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
               <h2 className="text-sm title-font text-gray-500 tracking-widest">
-                BRAND NAME
+                {product.brand}
               </h2>
               <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
-                The Catcher in the Rye
+                {product.title}
               </h1>
               <div className="flex mb-4">
                 <span className="flex items-center">
@@ -116,22 +153,10 @@ export default function ProductInfo() {
                   </a>
                 </span>
               </div>
-              <p className="leading-relaxed">
-                Fam locavore kickstarter distillery. Mixtape chillwave tumeric
-                sriracha taximy chia microdosing tilde DIY. XOXO fam indxgo
-                juiceramps cornhole raw denim forage brooklyn. Everyday carry +1
-                seitan poutine tumeric. Gastropub blue bottle austin listicle
-                pour-over, neutra jean shorts keytar banjo tattooed umami
-                cardigan.
-              </p>
+              <p className="leading-relaxed">{product.description}</p>
               <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
-                <div className="flex">
-                  <span className="mr-3">Color</span>
-                  <button className="border-2 border-gray-300 rounded-full w-6 h-6 focus:outline-none" />
-                  <button className="border-2 border-gray-300 ml-1 bg-gray-700 rounded-full w-6 h-6 focus:outline-none" />
-                  <button className="border-2 border-gray-300 ml-1 bg-indigo-500 rounded-full w-6 h-6 focus:outline-none" />
-                </div>
-                <div className="flex ml-6 items-center">
+                {/* we can add size here  */}
+                {/* <div className="flex ml-6 items-center">
                   <span className="mr-3">Size</span>
                   <div className="relative">
                     <select className="rounded border appearance-none border-gray-300 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 text-base pl-3 pr-10">
@@ -154,13 +179,15 @@ export default function ProductInfo() {
                       </svg>
                     </span>
                   </div>
-                </div>
+                </div> */}
               </div>
               <div className="flex">
                 <span className="title-font font-medium text-2xl text-gray-900">
-                  $58.00
+                  ₹{product.price}
                 </span>
-                <button className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">
+                <button className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded"
+                onClick={()=>addCart(product)}
+                >
                   Add to Cart
                 </button>
                 <button className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">

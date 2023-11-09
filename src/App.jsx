@@ -57,7 +57,7 @@ function App() {
             path="/order/:id"
             element={
               <ProtectedRoutes>
-                <Order/>
+                <Order />
               </ProtectedRoutes>
             }
           />

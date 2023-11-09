@@ -22,7 +22,7 @@ function Dashboard() {
                   <MdProductionQuantityLimits />
                 </div>
                 <h2 className="title-font font-medium text-3xl text-black fonts1">
-                {product && product.length}
+                  {product && product.length}
                 </h2>
                 <p className=" text-purple-500  font-bold">Total Products</p>
               </div>

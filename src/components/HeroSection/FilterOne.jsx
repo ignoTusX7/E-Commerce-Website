@@ -1,15 +1,9 @@
 import { useContext } from "react";
 import MyContext from "../../context/myContext";
 
-function Filter() {
+function FilterOne() {
   const context = useContext(MyContext);
-  const {
-    searchkey,
-    setSearchkey,
-    filterType,
-    setFilterType,
-    product,
-  } = context;
+  const { searchkey, setSearchkey, product } = context;
 
   // Create a Set to store unique category values
   const uniqueCategories = new Set();
@@ -18,9 +12,6 @@ function Filter() {
   product.forEach((item) => {
     uniqueCategories.add(item.category);
   });
-
-  // Convert the Set back to an array
-  const uniqueCategoriesArray = Array.from(uniqueCategories);
 
   return (
     <div>
@@ -53,26 +44,10 @@ function Filter() {
               Reset Filter
             </button>
           </div>
-          <div>
-            <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 mt-4">
-              <select
-                value={filterType}
-                onChange={(e) => setFilterType(e.target.value)}
-                className="px-4 py-3 w-full rounded-md bg-gray-50 border-transparent outline-0 focus:border-gray-500 focus:bg-white focus:ring-0 text-sm"
-              >
-                {/* Map through unique categories and render options */}
-                {uniqueCategoriesArray.map((category, index) => (
-                  <option key={index} value={category}>
-                    {category}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
         </div>
       </div>
     </div>
   );
 }
 
-export default Filter;
+export default FilterOne;

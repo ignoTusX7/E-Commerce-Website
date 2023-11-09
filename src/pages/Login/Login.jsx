@@ -3,6 +3,7 @@ import Layout from "../../components/Layout";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { toast } from "react-toastify";
 import { auth } from "../../firebase/FirebaseConfig";
+import { Link } from "react-router-dom";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -11,12 +12,18 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!email || !password) return toast.error("Please fill all fields");
+    if (!email || !password) return toast.error("Please fill all fields",{
+      autoClose: 800,
+      closeOnClick: true,
+    });
 
     try {
       const result = await signInWithEmailAndPassword(auth, email, password);
       localStorage.setItem("user", JSON.stringify(result));
-      toast.success("Login Successfully");
+      toast.success("Login Successfully", {
+        autoClose: 800,
+        closeOnClick: true,
+      });
       window.location.href = "/";
     } catch (error) {
       console.error(error);
@@ -29,17 +36,16 @@ export default function Login() {
         <div className="container px-5 py-24 mx-auto flex flex-wrap items-center">
           <div className="lg:w-3/5 md:w-1/2 md:pr-16 lg:pr-0 pr-0">
             <h1 className="title-font font-medium text-3xl text-gray-900">
-              Slow-carb next level shoindcgoitch ethical authentic, poko
-              scenester
+              Welcome to E-Cart - Your E-Commerce Website
             </h1>
             <p className="leading-relaxed mt-4">
-              Poke slow-carb mixtape knausgaard, typewriter street art gentrify
-              hammock starladder roathse. Craies vegan tousled etsy austin.
+              Shop from a wide range of products on E-Cart. Find the best deals
+              and enjoy a seamless shopping experience.
             </p>
           </div>
           <div className="lg:w-2/6 md:w-1/2 bg-gray-100 rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0">
             <h2 className="text-gray-900 text-lg font-medium title-font mb-5">
-              Login
+              Login to E-Cart
             </h2>
             <form method="post" onSubmit={handleSubmit}>
               <div className="relative mb-4">
@@ -79,7 +85,10 @@ export default function Login() {
               </button>
             </form>
             <p className="text-xs text-gray-500 mt-3">
-              Doesn&apos;t have an Account? Sign Up
+              Doesn&apos;t have an Account?{" "}
+              <Link className="text-blue-800" to={"/signup"}>
+                Sign Up
+              </Link>
             </p>
           </div>
         </div>

@@ -212,15 +212,19 @@ function DashboardTab() {
                   <tbody>
                     {console.log(orders)}
                     {orders &&
-                      orders.map((order, i) => {
+                      orders.map((order) => {
                         return order.cartItems.map((item, index) => {
                           return (
                             <tr
                               key={index}
                               className="bg-gray-50 border-b  dark:border-gray-700"
                             >
-                              <td className="px-6 py-4 text-black ">{order.paymentId}</td>
-                              <td className="px-6 py-4 text-black ">{order.orderId}</td>
+                              <td className="px-6 py-4 text-black ">
+                                {order.paymentId}
+                              </td>
+                              <td className="px-6 py-4 text-black ">
+                                {order.orderId}
+                              </td>
                               <th
                                 scope="row"
                                 className="px-6 py-4 font-medium text-black whitespace-nowrap"
@@ -237,17 +241,29 @@ function DashboardTab() {
                               <td className="px-6 py-4 text-black ">
                                 {item.title}
                               </td>
-                              <td className="px-6 py-4 text-black ">₹{item.price}</td>
-                              <td className="px-6 py-4 text-black ">{item.category}</td>
-                              <td className="px-6 py-4 text-black ">{item.quantity}</td>
-                              <td className="px-6 py-4 text-black ">{order.addressInfo.name}</td>
-                              <td className="px-6 py-4 text-black ">{order.addressInfo.fullAddress}</td>
-                              <td className="px-6 py-4 text-black ">{order.addressInfo.pincode}</td>
+                              <td className="px-6 py-4 text-black ">
+                                ₹{item.price}
+                              </td>
+                              <td className="px-6 py-4 text-black ">
+                                {item.category}
+                              </td>
+                              <td className="px-6 py-4 text-black ">
+                                {item.quantity}
+                              </td>
+                              <td className="px-6 py-4 text-black ">
+                                {order.addressInfo.name}
+                              </td>
+                              <td className="px-6 py-4 text-black ">
+                                {order.addressInfo.fullAddress}
+                              </td>
+                              <td className="px-6 py-4 text-black ">
+                                {order.addressInfo.pincode}
+                              </td>
                               <td className="px-6 py-4 text-black ">
                                 {order.addressInfo.mobileNumber}
                               </td>
                               <td className="px-6 py-4 text-black ">
-                              {order.addressInfo.email}
+                                {order.addressInfo.email}
                               </td>
                               <td className="px-6 py-4 text-black ">
                                 {order.date}

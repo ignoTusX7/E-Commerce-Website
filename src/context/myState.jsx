@@ -64,7 +64,8 @@ function MyState(props) {
     try {
       const q = query(
         collection(fireDB, "products"),
-        orderBy("createdAt")
+        orderBy("createdAt", 'desc')
+
         // limit(5)
       );
       const data = onSnapshot(q, (QuerySnapshot) => {
@@ -123,7 +124,9 @@ function MyState(props) {
     }
   };
 
-  const userid =  localStorage.getItem('user')?JSON.parse(localStorage.getItem("user")).user.uid: "";
+  const userid = localStorage.getItem("user")
+    ? JSON.parse(localStorage.getItem("user")).user.uid
+    : "";
   const myOrders =
     orders.length > 0 ? orders.filter((obj) => obj.userid == userid) : [];
 
@@ -186,6 +189,9 @@ function MyState(props) {
     }
   };
 
+  const [searchkey, setSearchkey] = useState("");
+  const [filterType, setFilterType] = useState("");
+
   return (
     <MyContext.Provider
       value={{
@@ -205,6 +211,10 @@ function MyState(props) {
         deleteCart,
         orders,
         myOrders,
+        searchkey,
+        setSearchkey,
+        filterType,
+        setFilterType,
       }}
     >
       {props.children}

@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 export default function ProductCard({ item }) {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart);
+
   const navigate = useNavigate();
 
   const addCart = (product) => {
@@ -87,7 +88,7 @@ export default function ProductCard({ item }) {
             </button>
             <button
               onClick={() => navigate(`/product/${item.id}`)}
-              className="focus:outline-none text-violet-600 bg-white hover:bg-violet-500 hover:text-white focus:ring-4 focus:ring-purple-300  rounded-lg w-full duration-200 "
+              className="focus:outline-none ring-2 ring-violet-500 text-violet-600 bg-white hover:bg-violet-500 hover:text-white focus:ring-4 focus:ring-purple-300  rounded-lg w-full duration-200 "
             >
               View
             </button>

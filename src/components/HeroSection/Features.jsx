@@ -2,6 +2,7 @@ function Features() {
   return (
     <div>
       <section className="text-gray-600 body-font">
+        <h3 className="text-center text-3xl">Features</h3>
         <div className="container px-5 md:py-5 mx-auto">
           <div className="flex flex-wrap -m-4 text-center">
             <div className="p-4 md:w-1/3 sm:w-1/2 w-full">
@@ -47,10 +48,10 @@ function Features() {
                 </svg>
 
                 <h2 className="title-font font-medium text-lg text-gray-900">
-                  Free Shipping
+                  Low Shipping Cost
                 </h2>
                 <p className="leading-relaxed">
-                  We ship all over India for FREE.
+                  We ship all over India in Lowest Shipping Cost.
                 </p>
               </div>
             </div>
